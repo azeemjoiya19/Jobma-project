@@ -1,0 +1,264 @@
+package com.jobma.qa.pages;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import com.jobma.qa.base.TestBase;
+import com.jobma.qa.util.JavascriptClicks;
+import com.jobma.qa.util.WebDriverUtilities;
+
+public class SubAccount extends TestBase {
+
+	//OR
+	
+	@FindBy(xpath="(//span[contains(text(),'Sub Accounts')])[3]")
+	WebElement  subaccountpagetext;
+
+	@FindBy(xpath="//span[contains(text(),'Job Approval Authority')]")
+	WebElement  jobapprovalauthority;
+
+	@FindBy(xpath="//span[contains(@class,'select2-results')]//ul//li")
+	List<WebElement>   jobapprovalauthoritylist;
+
+	@FindBy(xpath="//span[contains(text(),'Select Account Status ')]")
+	WebElement  selectaccountstatusfilterclick;
+
+
+	@FindBy(xpath="//span[contains(@class,'select2-results')]//ul//li")
+	List<WebElement> selectaccountstatuslist  ;
+
+	@FindBy(xpath="(//input[@id='searchBox'])[1]")
+	WebElement  searchbox;
+
+	@FindBy(xpath="(//i[@class='bi bi-search'])[2]")
+	WebElement  searchboxbtn;
+
+	@FindBy(xpath="(//button[normalize-space()='Add sub user'])[1]")
+	WebElement  addsubuserbtn;
+
+	@FindBy(xpath="(//input[@id='first_name'])[1]")
+	WebElement  subusernamefield;
+
+	@FindBy(xpath="(//input[@id='email'])[1]")
+	WebElement  subuseremailfield;
+
+	@FindBy(xpath="(//input[@id='password'])[1]")
+	WebElement  subuserpasswordfield;
+
+	@FindBy(xpath="(//input[@id='confirm_password'])[1]")
+	WebElement  subuserconfirmpasswordfield;
+
+	@FindBy(xpath="(//input[@id='approval_authority'])[1]")
+	WebElement  approvalauthoritycheckbox;
+
+
+	@FindBy(xpath="(//button[normalize-space()='Add Account'])[1]")
+	WebElement  addaccountbutton;
+
+	@FindBy(xpath="(//i[@class='bi bi-x-lg'])[3]")
+	WebElement  newsubusercancelmodulebtn;
+
+	@FindBy(xpath="(//button[normalize-space()='Permissions'])[1]")
+	WebElement  permissionsbtn;
+
+	@FindBy(xpath="(//button[@type='button'][normalize-space()='View'])[1]")
+	WebElement  viewbtn;
+
+	@FindBy(xpath="(//button[@id='activeDeactive_106025'])[1]")
+	WebElement  deactivatebtn;
+
+	@FindBy(xpath="(//button[@type='button'][normalize-space()='Delete'])[1]")
+	WebElement  deletebtn;
+
+	@FindBy(xpath="(//a[@aria-label='Access Account'][normalize-space()='Access Account'])[1]")
+	WebElement  accessaccountbtn;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[11]")
+	WebElement  evaluatecandidatepermissioncheckbox;
+	
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[12]")
+	WebElement  managesubaccountcheckbox;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[13]")
+	WebElement  invitecandidatecheckbox;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[14]")
+	WebElement  integrationcheckbox;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[15]")
+	WebElement  interviewlistingcheckbox;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[16]")
+	WebElement  companyprofilecheckbox;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[17]")
+	WebElement  companyvideocheckbox;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[18]")
+	WebElement  interviewkitcheckbox;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[19]")
+	WebElement  ratingparameters;
+
+	@FindBy(xpath="(//input[contains(@name,'posting_date')])[20]")
+	WebElement  interviewbranding;
+	
+	@FindBy(xpath="(//i[@class='bi bi-x-lg'])[2]")
+	WebElement permissioncanvascancelbtn;
+	
+	@FindBy(xpath="//h6[contains(text(),'Add subaccount')]")
+	WebElement addsubusermoduletitletext;
+	
+	@FindBy(xpath="//div[contains(text(),'Sub user added successfully.')]")
+	WebElement subusersuccessmessage;
+	
+	@FindBy(xpath="(//h6[@class='offcanvas-title'])[1]")
+	WebElement permissionoffcanvas;
+	
+	@FindBy(xpath="//div[contains(text(),'Permission changed successfully!')]")
+	WebElement permissionchangedsuccessfullmessage;
+	
+	@FindBy(xpath="(//div[@id='msg'])[1]")
+	WebElement permissiondeniedmessage;
+
+	@FindBy(xpath="(//li[contains(@class,'aside-nav-item')] )[3]//span")
+	List<WebElement> applicantslist;
+
+	public	SubAccount() throws IOException
+	{
+		PageFactory.initElements(driver, this);
+	}	
+	
+	//Actions 
+	
+	public void verifySubAccountPage()
+	{
+		 String s =subaccountpagetext.getText();
+		 Assert.assertEquals(s, "Sub Accounts");
+		 
+	}
+	
+	public void addSubUser()
+	{
+		addsubuserbtn.click();
+		WebDriverUtilities.wait1(driver, 30, addsubusermoduletitletext);
+		subusernamefield.sendKeys(prop.getProperty("subusername"));
+		subuseremailfield.sendKeys(prop.getProperty("subuseremail"));
+		subuserpasswordfield.sendKeys(prop.getProperty("subuserpasswordfield"));
+		subuserconfirmpasswordfield.sendKeys(prop.getProperty("subuserconfirmpasswordfield"));
+		approvalauthoritycheckbox.click();
+		addaccountbutton.click();
+		WebDriverUtilities.wait(driver,30, subusersuccessmessage);
+		boolean flag = subusersuccessmessage.isDisplayed();
+		Assert.assertTrue(flag);
+		System.out.println("Subaccount created successfully");
+		
+		
+	}
+	
+	public void permissionsButton()
+	{
+		searchbox.sendKeys(prop.getProperty("subuseremail"));
+		searchboxbtn.click();
+		WebDriverUtilities.wait(driver, 20, permissionsbtn);
+		 permissionsbtn.click();
+		 WebDriverUtilities.wait(driver, 30, permissionoffcanvas );
+		boolean flag = permissionoffcanvas.isDisplayed();
+		Assert.assertTrue(flag);
+		permissioncanvascancelbtn.click();
+		
+		System.out.println("Permission offcanvas displayed successfully");
+		
+	}
+	
+	public void permissionDeniedEvaluateCandidate() throws IOException, InterruptedException
+	{     searchbox.clear();
+		searchbox.sendKeys(prop.getProperty("subuseremail"));
+		searchboxbtn.click();
+		WebDriverUtilities.wait(driver, 20, permissionsbtn);
+		 permissionsbtn.click();
+		 WebDriverUtilities.wait(driver, 30, permissionoffcanvas);
+		 if(evaluatecandidatepermissioncheckbox.isSelected())
+		 {
+			 evaluatecandidatepermissioncheckbox.click();
+		 }
+		 else
+		 {
+			 System.out.println("Permission to evaluate not given already");
+		 }
+		 
+		 permissioncanvascancelbtn.click();
+
+		jd = new JobmaDashboard();
+		jd.clickOnEvaluateBtn();
+		 WebDriverUtilities.wait(driver, 30,  permissiondeniedmessage);
+		boolean flag1= permissiondeniedmessage.isDisplayed();
+		Assert.assertTrue(flag1);
+		 System.out.println("Permission to evaluate denied successfully from dashboard");
+		 jd.clickonapplicants.click();
+		 for(int i=1;i<applicantslist.size();i++)
+			 
+		 {
+			 if(applicantslist.get(i).getText().contains("Evaluate"))
+			 {
+				 System.out.println("Emplyer dont have permission to evaluate but he is able to evaluate from applicants");
+			 }
+			 else
+			 {
+				 Assert.assertTrue(true);
+			 }
+		 }
+		 
+		JavascriptClicks.javaScripthandle(jd.evaluatebtnatawaitingdecision);
+		WebDriverUtilities.wait(driver,30, jd.evaluatebtnatawaitingdecision);
+		boolean m =WebDriverUtilities.checkElementIsClickable(jd.evaluatebtnatawaitingdecision);
+		Assert.assertFalse(m);
+		JavascriptClicks.javaScripthandle(jd.evaluatebtnatrecentapplicants);
+		WebDriverUtilities.wait(driver,30, jd.evaluatebtnatrecentapplicants);
+		boolean n =WebDriverUtilities.checkElementIsClickable(jd.evaluatebtnatrecentapplicants);
+		Assert.assertFalse(n);
+		
+		/*Thread.sleep(4000);
+		boolean flag2 = jd.evaluatebtnatawaitingdecision.isEnabled();
+		Assert.assertFalse(flag2);
+		JavascriptClicks.javaScripthandle(jd.evaluatebtnatrecentapplicants);
+		WebDriverUtilities.wait(driver,30, jd.evaluatebtnatrecentapplicants);
+	boolean flag3 =	jd.evaluatebtnatrecentapplicants.isEnabled();
+	Assert.assertFalse(flag3); */
+		
+		 
+			}
+	
+	public void manageSubaccountPermissionDenied() throws IOException, InterruptedException
+	{
+		jd.clickOnSubaccountsModule();
+		WebDriverUtilities.wait1(driver, 30, subaccountpagetext);
+		searchbox.sendKeys(prop.getProperty("subuseremail"));
+		permissionsbtn.click();
+		WebDriverUtilities.wait1(driver, 30,permissionoffcanvas );
+		managesubaccountcheckbox.click();
+		 WebDriverUtilities.wait(driver, 20, permissionchangedsuccessfullmessage);
+		 boolean flag=permissionchangedsuccessfullmessage.isDisplayed();
+		 Assert.assertTrue(flag);
+		 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		 WebDriverUtilities.wait(driver, 100, permissioncanvascancelbtn);
+		 Thread.sleep(3000);
+		 permissioncanvascancelbtn.click();
+		accessaccountbtn.click();
+	}
+
+
+
+
+
+}
